@@ -385,7 +385,10 @@ def handle_file(logger, filename, fmt, rotating=False, maxbytes=0, backups=0):
 
     else:
         if rotating is False:
-            handler = FileHandler(filename)
+            if filename in ['/dev/stdout', '/dev/stderr']:
+                handler = FileHandler(filename, 'w')
+            else:
+                handler = FileHandler(filename)
         else:
             handler = RotatingFileHandler(filename, 'a', maxbytes, backups)
 
